@@ -32,6 +32,10 @@
           "editor.defaultFormatter": "esbenp.prettier-vscode",
           "editor.formatOnSave": true
         },
+        "[zig]": {
+          "editor.defaultFormatter": "ziglang.vscode-zig",
+          "editor.formatOnSave": true
+        },
         "editor.rulers": [80],
         "typescript.inlayHints.enumMemberValues.enabled": true,
         "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
@@ -40,7 +44,8 @@
         "typescript.inlayHints.parameterTypes.enabled": true,
         "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
         "typescript.inlayHints.variableTypes.enabled": true,
-        "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true
+        "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
+        "zig.zls.path": "/usr/local/bin/zls"
       }
     }
   },
