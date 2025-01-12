@@ -30,11 +30,14 @@ RUN ARCH=$(uname -m) && \
     ln -s /opt/zls-${ARCH}-linux/zls /usr/local/bin/zls
 
 USER vscode
+ENV HOME="/home/vscode"
 WORKDIR /work
-RUN mkdir -p /home/vscode/.config/fish
-ENV FISH_CONFIG_PATH=/home/vscode/.config/fish/config.fish
+
+ENV FISH_CONFIG_DIR="${HOME}/.config/fish"
+RUN mkdir -p "${FISH_CONFIG_DIR}"
 
 RUN curl -fsSL https://bun.sh/install | bash -s -- bun-v1.1.43 
 
-RUN echo "alias ll='ls -alF'" >> ${FISH_CONFIG_PATH}
-RUN echo "functions --erase fish_greeting" >> ${FISH_CONFIG_PATH}
+ENV FISH_CONFIG_FILE="${FISH_CONFIG_DIR}/config.fish"
+RUN echo "alias ll='ls -alF'" >> "${FISH_CONFIG_FILE}"
+RUN echo "functions --erase fish_greeting" >> "${FISH_CONFIG_FILE}"
