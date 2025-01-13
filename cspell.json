@@ -1,4 +1,7 @@
 {
-  "ignorePaths": [],
+  "ignorePaths": [
+    ".devcontainer/Dockerfile",
+    ".devcontainer/devcontainer.json"
+  ],
   "words": []
 }
