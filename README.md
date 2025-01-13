@@ -1,1 +1,1 @@
-# graphql-zig
+# ZigraphQL

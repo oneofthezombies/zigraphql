@@ -3,5 +3,5 @@
     ".devcontainer/Dockerfile",
     ".devcontainer/devcontainer.json"
   ],
-  "words": []
+  "words": ["zigraphql"]
 }
