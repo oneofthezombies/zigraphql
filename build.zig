@@ -7,6 +7,7 @@ pub fn build(b: *std.Build) void {
         .name = "zigraphql",
         .target = target,
         .optimize = optimize,
+        .root_source_file = b.path("src/zigraphql.zig"),
     });
     b.installArtifact(exe);
 }
