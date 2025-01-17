@@ -48,3 +48,28 @@ test "Source.init empty body" {
     try expect(config.location_offset.line == config.location_offset.line);
     try expect(config.location_offset.column == config.location_offset.column);
 }
+
+test "Source.init with body" {
+    const source = Source.init("query { hello }", .{});
+    try expectEqualStrings("GraphQL request", source.name);
+    try expectEqualStrings("query { hello }", source.body);
+    const config = Source.Config{};
+    try expectEqualStrings(config.name, source.name);
+    try expect(config.location_offset.line == config.location_offset.line);
+    try expect(config.location_offset.column == config.location_offset.column);
+}
+
+test "Source.init with custom config" {
+    const config = Source.Config{
+        .name = "Custom name",
+        .location_offset = Location{
+            .line = 2,
+            .column = 2,
+        },
+    };
+    const source = Source.init("query { hello }", config);
+    try expectEqualStrings("Custom name", source.name);
+    try expectEqualStrings("query { hello }", source.body);
+    try expect(config.location_offset.line == 2);
+    try expect(config.location_offset.column == 2);
+}
