@@ -3,5 +3,5 @@
     ".devcontainer/Dockerfile",
     ".devcontainer/devcontainer.json"
   ],
-  "words": ["zigraphql", "comptime"]
+  "words": ["zigraphql", "comptime", "usize"]
 }
