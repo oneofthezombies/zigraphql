@@ -33,6 +33,18 @@ pub const Source = struct {
     }
 };
 
+pub const SourceTag = union(enum) {
+    string: []const u8,
+    source: *Source,
+};
+
+pub fn isSource(tag: SourceTag) bool {
+    switch (tag) {
+        .string => return false,
+        .source => return true,
+    }
+}
+
 test "Source.Args default values" {
     const args = Source.Args{};
     try expectEqualStrings("GraphQL request", args.name);
@@ -72,4 +84,15 @@ test "Source.init with custom args" {
     try expectEqualStrings("query { hello }", source.body);
     try expect(args.location_offset.line == source.location_offset.line);
     try expect(args.location_offset.column == source.location_offset.column);
+}
+
+test "SourceTag.isSource" {
+    var source = Source.init("query { hello }", .{});
+    const tag = SourceTag{ .source = &source };
+    try expect(isSource(tag));
+}
+
+test "SourceTag.isSource false" {
+    const tag = SourceTag{ .string = "query { hello }" };
+    try expect(!isSource(tag));
 }
