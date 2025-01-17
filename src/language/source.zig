@@ -10,7 +10,7 @@ pub const Location = struct {
 };
 
 pub const Source = struct {
-    pub const Config = struct {
+    pub const Args = struct {
         name: []const u8 = "GraphQL request",
         location_offset: Location = Location{
             .line = 1,
@@ -22,54 +22,54 @@ pub const Source = struct {
     name: []const u8,
     location_offset: Location,
 
-    pub fn init(body: []const u8, config: Config) Source {
-        assert(config.location_offset.line > 0);
-        assert(config.location_offset.column > 0);
+    pub fn init(body: []const u8, args: Args) Source {
+        assert(args.location_offset.line > 0);
+        assert(args.location_offset.column > 0);
         return Source{
             .body = body,
-            .name = config.name,
-            .location_offset = config.location_offset,
+            .name = args.name,
+            .location_offset = args.location_offset,
         };
     }
 };
 
-test "Source.Config default values" {
-    const config = Source.Config{};
-    try expectEqualStrings("GraphQL request", config.name);
-    try expect(config.location_offset.line == 1);
-    try expect(config.location_offset.column == 1);
+test "Source.Args default values" {
+    const args = Source.Args{};
+    try expectEqualStrings("GraphQL request", args.name);
+    try expect(args.location_offset.line == 1);
+    try expect(args.location_offset.column == 1);
 }
 
 test "Source.init empty body" {
     const source = Source.init("", .{});
     try expectEqualStrings("GraphQL request", source.name);
-    const config = Source.Config{};
-    try expectEqualStrings(config.name, source.name);
-    try expect(config.location_offset.line == config.location_offset.line);
-    try expect(config.location_offset.column == config.location_offset.column);
+    const args = Source.Args{};
+    try expectEqualStrings(args.name, source.name);
+    try expect(args.location_offset.line == source.location_offset.line);
+    try expect(args.location_offset.column == source.location_offset.column);
 }
 
 test "Source.init with body" {
     const source = Source.init("query { hello }", .{});
     try expectEqualStrings("GraphQL request", source.name);
     try expectEqualStrings("query { hello }", source.body);
-    const config = Source.Config{};
-    try expectEqualStrings(config.name, source.name);
-    try expect(config.location_offset.line == config.location_offset.line);
-    try expect(config.location_offset.column == config.location_offset.column);
+    const args = Source.Args{};
+    try expectEqualStrings(args.name, source.name);
+    try expect(args.location_offset.line == source.location_offset.line);
+    try expect(args.location_offset.column == source.location_offset.column);
 }
 
-test "Source.init with custom config" {
-    const config = Source.Config{
+test "Source.init with custom args" {
+    const args = Source.Args{
         .name = "Custom name",
         .location_offset = Location{
             .line = 2,
             .column = 2,
         },
     };
-    const source = Source.init("query { hello }", config);
+    const source = Source.init("query { hello }", args);
     try expectEqualStrings("Custom name", source.name);
     try expectEqualStrings("query { hello }", source.body);
-    try expect(config.location_offset.line == 2);
-    try expect(config.location_offset.column == 2);
+    try expect(args.location_offset.line == source.location_offset.line);
+    try expect(args.location_offset.column == source.location_offset.column);
 }
